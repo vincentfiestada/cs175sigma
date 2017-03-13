@@ -9,6 +9,10 @@ def verify(algebra, universe):
 		if universe - subset not in algebra:
 			print("Set not closed under complementation")
 			return False
+		for element in subset:
+			if element not in universe:
+				print("Element not in universe")
+				return False
 	# Make sure closed under finite union
 	for subset in algebra:
 		for osub in algebra:

@@ -3,6 +3,9 @@
 ## Then, add some subsets that you wish to be part of the algebra
 ## Finally, the constructor fixes any errors based on the provided data
 ## (c) Copyright 2017 Vincent Fiestada <vffiestada@gmail.com>
+
+import verify # See verify.py
+
 class constructor:
 	def __init__(self, universe):
 		self.universe = frozenset(universe) # Store the universal set U
@@ -31,7 +34,9 @@ class constructor:
 			for a in self.algebra:
 				others = (b for b in self.algebra if b != a)
 				for b in others:
-					toAdd.add(a.union(b)) # Add A Union B
+					ab = a.union(b)
+					toAdd.add(ab) # Add A Union B
+					toAdd.add(self.universe - ab) # Add complement of A Union B
 			for n in toAdd:
 				self.algebra.add(n)
 			newLen = len(self.algebra)
@@ -41,10 +46,12 @@ class constructor:
 			else:
 				oldLen = newLen
 		print (self.algebra)
-	def elements(self): # Get elements
+	def getElements(self): # Get elements
 		return self.algebra
-	def universe(self): # Get universal set
+	def getUniverse(self): # Get universal set
 		return self.universe
+	def verify(self):
+		return verify.verify([set(x) for x in self.algebra], self.universe)
 	def pretty(self): # Returns a neater representation
 		return list(list(m) for m in self.algebra)
 
